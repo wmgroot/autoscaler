@@ -439,7 +439,7 @@ func TestCloudProvider_DeleteNodes(t *testing.T) {
 		client: client,
 	}
 
-	err := ng1.DeleteNodes(nodes)
+	err := ng1.DeleteNodes(nodes, false)
 	assert.NoError(t, err)
 
 	// test grpc error
@@ -457,7 +457,7 @@ func TestCloudProvider_DeleteNodes(t *testing.T) {
 		client: client,
 	}
 
-	err = ng2.DeleteNodes(nodes)
+	err = ng2.DeleteNodes(nodes, false)
 	assert.Error(t, err)
 
 }

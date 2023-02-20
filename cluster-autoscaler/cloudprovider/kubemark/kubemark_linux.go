@@ -222,7 +222,7 @@ func (nodeGroup *NodeGroup) Nodes() ([]cloudprovider.Instance, error) {
 }
 
 // DeleteNodes deletes the specified nodes from the node group.
-func (nodeGroup *NodeGroup) DeleteNodes(nodes []*apiv1.Node) error {
+func (nodeGroup *NodeGroup) DeleteNodes(nodes []*apiv1.Node, removingFailedNodes bool) error {
 	size, err := nodeGroup.kubemarkController.GetNodeGroupTargetSize(nodeGroup.Name)
 	if err != nil {
 		return err

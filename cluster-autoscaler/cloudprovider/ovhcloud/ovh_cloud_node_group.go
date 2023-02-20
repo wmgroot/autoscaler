@@ -110,7 +110,7 @@ func (ng *NodeGroup) IncreaseSize(delta int) error {
 }
 
 // DeleteNodes deletes the nodes from the group.
-func (ng *NodeGroup) DeleteNodes(nodes []*apiv1.Node) error {
+func (ng *NodeGroup) DeleteNodes(nodes []*apiv1.Node, removingFailedNodes bool) error {
 	// Do not use node group which does not support autoscaling
 	if !ng.Autoscale {
 		return nil

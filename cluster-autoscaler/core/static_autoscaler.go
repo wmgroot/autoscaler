@@ -748,7 +748,7 @@ func removeOldUnregisteredNodes(unregisteredNodes []clusterstate.UnregisteredNod
 				klog.Warningf("Failed to remove node %s: node group min size reached, skipping unregistered node removal", unregisteredNode.Node.Name)
 				continue
 			}
-			err = nodeGroup.DeleteNodes([]*apiv1.Node{unregisteredNode.Node})
+			err = nodeGroup.DeleteNodes([]*apiv1.Node{unregisteredNode.Node}, true)
 			csr.InvalidateNodeInstancesCacheEntry(nodeGroup)
 			if err != nil {
 				klog.Warningf("Failed to remove node %s: %v", unregisteredNode.Node.Name, err)
@@ -800,7 +800,7 @@ func (a *StaticAutoscaler) deleteCreatedNodesWithErrors() (bool, error) {
 		if nodeGroup == nil {
 			err = fmt.Errorf("node group %s not found", nodeGroupId)
 		} else {
-			err = nodeGroup.DeleteNodes(nodesToBeDeleted)
+			err = nodeGroup.DeleteNodes(nodesToBeDeleted, true)
 		}
 
 		if err != nil {

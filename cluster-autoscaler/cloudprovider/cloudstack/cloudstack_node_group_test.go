@@ -170,7 +170,7 @@ func testDeleteNodesError(t *testing.T) {
 
 	// Can't go below minSize
 	asg := createASG()
-	err := asg.DeleteNodes(nodes)
+	err := asg.DeleteNodes(nodes, false)
 	clusterDetails := createClusterDetails()
 	assert.Equal(t, clusterDetails, asg.cluster)
 	assert.NotEqual(t, nil, err)
@@ -196,7 +196,7 @@ func testDeleteNodesSuccess(t *testing.T) {
 				},
 			},
 		},
-	})
+	}, false)
 	scaleDownClusterDetails := createScaleDownClusterDetails()
 	assert.Equal(t, scaleDownClusterDetails, asg.cluster)
 	assert.Equal(t, nil, err)

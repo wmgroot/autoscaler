@@ -195,7 +195,7 @@ func (asg *tcAsg) Autoprovisioned() bool {
 }
 
 // DeleteNodes deletes the nodes from the group.
-func (asg *tcAsg) DeleteNodes(nodes []*apiv1.Node) error {
+func (asg *tcAsg) DeleteNodes(nodes []*apiv1.Node, removingFailedNodes bool) error {
 	size, err := asg.tencentcloudManager.GetAsgSize(asg)
 	if err != nil {
 		return err

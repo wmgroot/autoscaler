@@ -106,7 +106,7 @@ func (ng *nodeGroup) Nodes() ([]cloudprovider.Instance, error) {
 }
 
 // DeleteNodes deletes the specified nodes from the node group.
-func (ng *nodeGroup) DeleteNodes(toDelete []*corev1.Node) error {
+func (ng *nodeGroup) DeleteNodes(toDelete []*corev1.Node, removingFailedNodes bool) error {
 	if ng.replicas-len(toDelete) < ng.MinSize() {
 		return fmt.Errorf("node group size would be below minimum size - desired: %d, min: %d",
 			ng.replicas-len(toDelete), ng.MinSize())

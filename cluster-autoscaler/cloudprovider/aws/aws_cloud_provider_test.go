@@ -430,7 +430,7 @@ func TestDeleteNodes(t *testing.T) {
 			ProviderID: "aws:///us-east-1a/test-instance-id",
 		},
 	}
-	err = asgs[0].DeleteNodes([]*apiv1.Node{node})
+	err = asgs[0].DeleteNodes([]*apiv1.Node{node}, false)
 	assert.NoError(t, err)
 	a.AssertNumberOfCalls(t, "TerminateInstanceInAutoScalingGroup", 1)
 	a.AssertNumberOfCalls(t, "DescribeAutoScalingGroupsPages", 1)
@@ -483,7 +483,7 @@ func TestDeleteNodesWithPlaceholder(t *testing.T) {
 			ProviderID: "aws:///us-east-1a/i-placeholder-test-asg-1",
 		},
 	}
-	err = asgs[0].DeleteNodes([]*apiv1.Node{node})
+	err = asgs[0].DeleteNodes([]*apiv1.Node{node}, false)
 	assert.NoError(t, err)
 	a.AssertNumberOfCalls(t, "SetDesiredCapacity", 1)
 	a.AssertNumberOfCalls(t, "DescribeAutoScalingGroupsPages", 1)
@@ -527,7 +527,7 @@ func TestDeleteNodesAfterMultipleRefreshes(t *testing.T) {
 			ProviderID: "aws:///us-east-1a/test-instance-id",
 		},
 	}
-	err := asgs[0].DeleteNodes([]*apiv1.Node{node})
+	err := asgs[0].DeleteNodes([]*apiv1.Node{node}, false)
 	assert.NoError(t, err)
 }
 

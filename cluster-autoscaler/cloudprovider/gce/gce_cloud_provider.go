@@ -278,7 +278,7 @@ func (mig *gceMig) Belongs(node *apiv1.Node) (bool, error) {
 }
 
 // DeleteNodes deletes the nodes from the group.
-func (mig *gceMig) DeleteNodes(nodes []*apiv1.Node) error {
+func (mig *gceMig) DeleteNodes(nodes []*apiv1.Node, removingFailedNodes bool) error {
 	size, err := mig.gceManager.GetMigSize(mig)
 	if err != nil {
 		return err

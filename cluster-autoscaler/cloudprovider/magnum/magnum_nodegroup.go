@@ -89,7 +89,7 @@ func (ng *magnumNodeGroup) IncreaseSize(delta int) error {
 }
 
 // deleteNodes deletes a set of nodes chosen by the autoscaler.
-func (ng *magnumNodeGroup) DeleteNodes(nodes []*apiv1.Node) error {
+func (ng *magnumNodeGroup) DeleteNodes(nodes []*apiv1.Node, removingFailedNodes bool) error {
 	ng.clusterUpdateLock.Lock()
 	defer ng.clusterUpdateLock.Unlock()
 

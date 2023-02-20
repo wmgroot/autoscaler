@@ -104,7 +104,7 @@ func (ng *packetNodeGroup) IncreaseSize(delta int) error {
 //   - simultaneous but separate calls from the autoscaler are batched together
 //   - does not allow scaling while the cluster is already in an UPDATE_IN_PROGRESS state
 //   - after scaling down, blocks until the cluster has reached UPDATE_COMPLETE
-func (ng *packetNodeGroup) DeleteNodes(nodes []*apiv1.Node) error {
+func (ng *packetNodeGroup) DeleteNodes(nodes []*apiv1.Node, removingFailedNodes bool) error {
 	klog.V(1).Infof("Locking nodesToDeleteMutex")
 
 	// Batch simultaneous deletes on individual nodes

@@ -112,7 +112,7 @@ func (_m *NodeGroup) Delete() error {
 }
 
 // DeleteNodes provides a mock function with given fields: _a0
-func (_m *NodeGroup) DeleteNodes(_a0 []*v1.Node) error {
+func (_m *NodeGroup) DeleteNodes(_a0 []*v1.Node, removingFailedNodes bool) error {
 	ret := _m.Called(_a0)
 
 	var r0 error

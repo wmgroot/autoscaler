@@ -423,7 +423,7 @@ func (as *AgentPool) DeleteInstances(instances []*azureRef) error {
 }
 
 // DeleteNodes deletes the nodes from the group.
-func (as *AgentPool) DeleteNodes(nodes []*apiv1.Node) error {
+func (as *AgentPool) DeleteNodes(nodes []*apiv1.Node, removingFailedNodes bool) error {
 	klog.V(6).Infof("Delete nodes requested: %v\n", nodes)
 	indexes, _, err := as.GetVMIndexes()
 	if err != nil {

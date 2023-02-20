@@ -203,6 +203,11 @@ func (r unstructuredScalableResource) Taints() []apiv1.Taint {
 	return nil
 }
 
+// If true, Cluster Autoscaler will only mark nodes for deletion, and rely on the node provisioner to delete them
+func (r unstructuredScalableResource) ExternalNodeDeletionEnabled() bool {
+	return externalNodeDeletionEnabled(r.unstructured.GetAnnotations())
+}
+
 // A node group can scale from zero if it can inform about the CPU and memory
 // capacity of the nodes within the group.
 func (r unstructuredScalableResource) CanScaleFromZero() bool {
