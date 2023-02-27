@@ -250,7 +250,7 @@ func TestNodeGroup_DeleteNodes(t *testing.T) {
 			nil,
 		).Once()
 
-		err := ng.DeleteNodes(nodes)
+		err := ng.DeleteNodes(nodes, false)
 		assert.NoError(t, err)
 	})
 
@@ -286,7 +286,7 @@ func TestNodeGroup_DeleteNodes(t *testing.T) {
 			errors.New("random error"),
 		).Once()
 
-		err := ng.DeleteNodes(nodes)
+		err := ng.DeleteNodes(nodes, false)
 		assert.Error(t, err)
 	})
 }

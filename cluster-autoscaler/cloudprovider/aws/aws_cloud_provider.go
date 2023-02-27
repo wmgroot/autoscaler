@@ -290,7 +290,7 @@ func (ng *AwsNodeGroup) Belongs(node *apiv1.Node) (bool, error) {
 }
 
 // DeleteNodes deletes the nodes from the group.
-func (ng *AwsNodeGroup) DeleteNodes(nodes []*apiv1.Node) error {
+func (ng *AwsNodeGroup) DeleteNodes(nodes []*apiv1.Node, removingFailedNodes bool) error {
 	size := ng.asg.curSize
 	if int(size) <= ng.MinSize() {
 		return fmt.Errorf("min size reached, nodes will not be deleted")

@@ -92,7 +92,7 @@ func (ng *nodegroup) IncreaseSize(delta int) error {
 // either on failure or if the given node doesn't belong to this node
 // group. This function should wait until node group size is updated.
 // Implementation required.
-func (ng *nodegroup) DeleteNodes(nodes []*corev1.Node) error {
+func (ng *nodegroup) DeleteNodes(nodes []*corev1.Node, removingFailedNodes bool) error {
 	ng.machineController.accessLock.Lock()
 	defer ng.machineController.accessLock.Unlock()
 
@@ -157,12 +157,15 @@ func (ng *nodegroup) DeleteNodes(nodes []*corev1.Node) error {
 			return err
 		}
 
-		if err := ng.scalableResource.SetSize(replicas - 1); err != nil {
-			_ = nodeGroup.scalableResource.UnmarkMachineForDeletion(machine)
-			return err
-		}
+		// check to see if we should allow the external node provisioner to handle clean up of nodes that exceed their max provision time
+		if !(removingFailedNodes && nodeGroup.scalableResource.ExternalNodeDeletionEnabled()) {
+			if err := ng.scalableResource.SetSize(replicas - 1); err != nil {
+				_ = nodeGroup.scalableResource.UnmarkMachineForDeletion(machine)
+				return err
+			}
 
-		replicas--
+			replicas--
+		}
 	}
 
 	return nil

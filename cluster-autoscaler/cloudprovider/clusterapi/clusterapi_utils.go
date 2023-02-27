@@ -36,6 +36,8 @@ const (
 	maxPodsKey      = "capacity.cluster-autoscaler.kubernetes.io/maxPods"
 	taintsKey       = "capacity.cluster-autoscaler.kubernetes.io/taints"
 	labelsKey       = "capacity.cluster-autoscaler.kubernetes.io/labels"
+
+	externalNodeDeletionKey = "cluster-autoscaler.kubernetes.io/external-node-deletion"
 )
 
 var (
@@ -227,6 +229,15 @@ func parseGPUType(annotations map[string]string) string {
 
 func parseMaxPodsCapacity(annotations map[string]string) (resource.Quantity, error) {
 	return parseIntKey(annotations, maxPodsKey)
+}
+
+// If true, Cluster Autoscaler will only mark nodes for deletion, and rely on the node provisioner to delete them
+func externalNodeDeletionEnabled(annotations map[string]string) bool {
+	val, ok := annotations[externalNodeDeletionKey]
+	if ok && val == "true" {
+		return true
+	}
+	return false
 }
 
 func clusterNameFromResource(r *unstructured.Unstructured) string {

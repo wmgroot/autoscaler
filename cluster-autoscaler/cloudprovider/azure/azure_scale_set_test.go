@@ -309,7 +309,7 @@ func TestDeleteNodes(t *testing.T) {
 			},
 		},
 	}
-	err = scaleSet.DeleteNodes(nodesToDelete)
+	err = scaleSet.DeleteNodes(nodesToDelete, false)
 	assert.NoError(t, err)
 	vmssCapacity = 1
 	expectedScaleSets = []compute.VirtualMachineScaleSet{
@@ -404,7 +404,7 @@ func TestDeleteNodeUnregistered(t *testing.T) {
 			},
 		},
 	}
-	err = scaleSet.DeleteNodes(nodesToDelete)
+	err = scaleSet.DeleteNodes(nodesToDelete, false)
 	assert.NoError(t, err)
 
 	// Ensure the the cached size has NOT been proactively decremented
@@ -473,7 +473,7 @@ func TestDeleteNoConflictRequest(t *testing.T) {
 	scaleSet, ok := provider.NodeGroups()[0].(*ScaleSet)
 	assert.True(t, ok)
 
-	err = scaleSet.DeleteNodes([]*apiv1.Node{node})
+	err = scaleSet.DeleteNodes([]*apiv1.Node{node}, false)
 }
 
 func TestId(t *testing.T) {

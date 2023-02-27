@@ -114,7 +114,7 @@ func (ng *cherryNodeGroup) IncreaseSize(delta int) error {
 }
 
 // DeleteNodes deletes a set of nodes chosen by the autoscaler.
-func (ng *cherryNodeGroup) DeleteNodes(nodes []*apiv1.Node) error {
+func (ng *cherryNodeGroup) DeleteNodes(nodes []*apiv1.Node, removingFailedNodes bool) error {
 	// Batch simultaneous deletes on individual nodes
 	if err := ng.addNodesToDelete(nodes); err != nil {
 		return err

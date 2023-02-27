@@ -295,7 +295,7 @@ func (agentPool *AKSAgentPool) deleteNodesInternal(providerIDs []string) (delete
 
 // DeleteNodes extracts the providerIDs from the node spec and calls into the internal
 // delete method.
-func (agentPool *AKSAgentPool) DeleteNodes(nodes []*apiv1.Node) error {
+func (agentPool *AKSAgentPool) DeleteNodes(nodes []*apiv1.Node, removingFailedNodes bool) error {
 	agentPool.mutex.Lock()
 	defer agentPool.mutex.Unlock()
 

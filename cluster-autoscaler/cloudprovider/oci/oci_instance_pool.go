@@ -18,6 +18,7 @@ package oci
 
 import (
 	"fmt"
+
 	"github.com/pkg/errors"
 	apiv1 "k8s.io/api/core/v1"
 	"k8s.io/autoscaler/cluster-autoscaler/cloudprovider"
@@ -93,7 +94,7 @@ func (ip *InstancePoolNodeGroup) IncreaseSize(delta int) error {
 // DeleteNodes deletes nodes from this instance-pool. Error is returned either on
 // failure or if the given node doesn't belong to this instance-pool. This function
 // should wait until instance-pool size is updated. Implementation required.
-func (ip *InstancePoolNodeGroup) DeleteNodes(nodes []*apiv1.Node) error {
+func (ip *InstancePoolNodeGroup) DeleteNodes(nodes []*apiv1.Node, removingFailedNodes bool) error {
 
 	// FYI, unregistered nodes come in as the provider id as node name.
 

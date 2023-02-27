@@ -427,7 +427,7 @@ func (scaleSet *ScaleSet) DeleteInstances(instances []*azureRef, hasUnregistered
 }
 
 // DeleteNodes deletes the nodes from the group.
-func (scaleSet *ScaleSet) DeleteNodes(nodes []*apiv1.Node) error {
+func (scaleSet *ScaleSet) DeleteNodes(nodes []*apiv1.Node, removingFailedNodes bool) error {
 	klog.V(8).Infof("Delete nodes requested: %q\n", nodes)
 	size, err := scaleSet.GetScaleSetSize()
 	if err != nil {

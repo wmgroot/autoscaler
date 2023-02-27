@@ -19,6 +19,9 @@ package kamatera
 import (
 	"context"
 	"fmt"
+	"strconv"
+	"strings"
+
 	apiv1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -27,8 +30,6 @@ import (
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/klog/v2"
 	schedulerframework "k8s.io/kubernetes/pkg/scheduler/framework"
-	"strconv"
-	"strings"
 )
 
 // NodeGroup implements cloudprovider.NodeGroup interface. NodeGroup contains
@@ -87,7 +88,7 @@ func (n *NodeGroup) IncreaseSize(delta int) error {
 // DeleteNodes deletes nodes from this node group. Error is returned either on
 // failure or if the given node doesn't belong to this node group. This function
 // should wait until node group size is updated. Implementation required.
-func (n *NodeGroup) DeleteNodes(nodes []*apiv1.Node) error {
+func (n *NodeGroup) DeleteNodes(nodes []*apiv1.Node, removingFailedNodes bool) error {
 	for _, node := range nodes {
 		instance, err := n.findInstanceForNode(node)
 		if err != nil {

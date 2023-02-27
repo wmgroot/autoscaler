@@ -337,7 +337,7 @@ func TestDeleteNodesAKS(t *testing.T) {
 			},
 		},
 	}
-	err := aksPool.DeleteNodes(nodes)
+	err := aksPool.DeleteNodes(nodes, false)
 	assert.Equal(t, 4, aksPool.curSize)
 	assert.NoError(t, err)
 }
