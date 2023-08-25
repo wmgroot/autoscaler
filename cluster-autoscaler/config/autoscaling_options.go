@@ -128,6 +128,8 @@ type AutoscalingOptions struct {
 	EnforceNodeGroupMinSize bool
 	// ScaleDownEnabled is used to allow CA to scale down the cluster
 	ScaleDownEnabled bool
+	// ScaleDownUnreadyEnabled is used to allow CA to scale down unready nodes of the cluster
+	ScaleDownUnreadyEnabled bool
 	// ScaleDownDelayAfterAdd sets the duration from the last scale up to the time when CA starts to check scale down options
 	ScaleDownDelayAfterAdd time.Duration
 	// ScaleDownDelayAfterDelete sets the duration between scale down attempts if scale down removes one or more nodes
@@ -247,4 +249,6 @@ type AutoscalingOptions struct {
 	ParallelDrain bool
 	// NodeGroupSetRatio is a collection of ratios used by CA used to make scaling decisions.
 	NodeGroupSetRatios NodeGroupDifferenceRatios
+	// ExternalNodeDeletion controls whether or not CA will adjust replica counts to delete failed nodes. If true, replica counts are only modifed for scale up/down events and responsibility for the deletion of failed nodes is delegated to the cloud provider.
+	ExternalNodeDeletion bool
 }
